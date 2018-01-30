@@ -115,10 +115,6 @@
       <Project>{d84f31ed-3d81-42f2-9190-3d021d6038a0}</Project>
       <Name>SharpMap.Layers.BruTile</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SharpMap.UI.WPF\SharpMap.UI.WPF.csproj">
-      <Project>{6dda47a4-ce0c-4880-82ce-6ef6feec4912}</Project>
-      <Name>SharpMap.UI.WPF</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SharpMap.UI\SharpMap.UI.csproj">
       <Project>{dd1cc1db-4bf9-4c88-a100-733d84795f3a}</Project>
       <Name>SharpMap.UI</Name>

@@ -245,18 +245,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharpMap.Data.Providers.GeoPackage\SharpMap.Data.Providers.GeoPackage.csproj">
-      <Project>{AF0594AB-FC1D-47E4-8CDD-361CDC621A36}</Project>
-      <Name>SharpMap.Data.Providers.GeoPackage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharpMap.Data.Providers.Kml\SharpMap.Data.Providers.Kml.csproj">
-      <Project>{F9DA6934-413F-4744-84CE-923D901F60E6}</Project>
-      <Name>SharpMap.Data.Providers.Kml</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharpMap.Data.Providers.OracleSpatial\SharpMap.Data.Providers.OracleSpatial.csproj">
-      <Project>{9BBED556-40D8-4DDC-AC11-7B03300E2A2E}</Project>
-      <Name>SharpMap.Data.Providers.OracleSpatial</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SharpMap.Layers.BruTile\SharpMap.Layers.BruTile.csproj">
       <Project>{d84f31ed-3d81-42f2-9190-3d021d6038a0}</Project>
       <Name>SharpMap.Layers.BruTile</Name>
@@ -264,10 +252,6 @@
     <ProjectReference Include="..\SharpMap.Serialization\SharpMap.Serialization.csproj">
       <Project>{75E9B9FF-D04E-4F4F-8D06-8CD310F5F2DB}</Project>
       <Name>SharpMap.Serialization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharpMap.SqlServerSpatialObjects\SharpMap.SqlServerSpatialObjects.csproj">
-      <Project>{6D681045-8EF1-44EA-A19D-C7A63A6D0F76}</Project>
-      <Name>SharpMap.SqlServerSpatialObjects</Name>
     </ProjectReference>
     <ProjectReference Include="..\SharpMap.Utilities.Indexing.SbnTree\SharpMap.Utilities.Indexing.SbnTree.csproj">
       <Project>{723F9FD5-8424-4EEE-BA92-57ECEE0F395D}</Project>

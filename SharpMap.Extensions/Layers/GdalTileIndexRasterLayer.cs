@@ -21,9 +21,7 @@ using System.Drawing;
 using System.IO;
 using Common.Logging;
 using GeoAPI.Geometries;
-using Mono.Security.Protocol.Ntlm;
 using OSGeo.GDAL;
-using ProjNet.CoordinateSystems;
 using SharpMap.Data;
 using SharpMap.Data.Providers;
 
@@ -38,7 +36,6 @@ namespace SharpMap.Layers
     /// For example, to make a mosaic of several TIFFs:
     ///
     /// gdaltindex imagery.shp imagery/*.tif
-    
     /// See: http://mapserver.org/optimization/tileindex.html
     /// </summary>
     public class GdalTileIndexRasterLayer : GdalRasterLayer
@@ -73,7 +70,6 @@ namespace SharpMap.Layers
         /// For example, to make a mosaic of several TIFFs:
         ///
         /// gdaltindex imagery.shp imagery/*.tif
-
         /// See: http://mapserver.org/optimization/tileindex.html
         /// </summary>
         /// <param name="layerName">Name of the layer</param>

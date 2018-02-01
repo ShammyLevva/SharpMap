@@ -133,9 +133,10 @@ namespace SharpMap.Layers
             get { return _transform[3]; }
         }
 
-        /// <summary>
-        /// bottom value of the image
-        /// </summary>
+#pragma warning disable CS1587 // XML comment is not placed on a valid language element
+                              /// <summary>
+                              /// bottom value of the image
+                              /// </summary>
         // public double Bottom
         // {
         //   get { return this.Top + (this.VerticalPixelResolution * _gdalDataset.YSize); }
@@ -145,6 +146,7 @@ namespace SharpMap.Layers
         /// Gets or sets the west to east pixel resolution
         /// </summary>
         public double HorizontalPixelResolution
+#pragma warning restore CS1587 // XML comment is not placed on a valid language element
         {
             get { return _transform[1]; }
             set { this[1] = value; }

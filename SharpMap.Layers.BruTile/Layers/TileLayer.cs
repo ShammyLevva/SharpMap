@@ -180,7 +180,9 @@ namespace SharpMap.Layers
 
                     var extent = new Extent(map.Envelope.MinX, map.Envelope.MinY, 
                                             map.Envelope.MaxX, map.Envelope.MaxY);
+#pragma warning disable CS0618 // Type or member is obsolete
                     var level = BruTile.Utilities.GetNearestLevel(_source.Schema.Resolutions, map.PixelSize);
+#pragma warning restore CS0618 // Type or member is obsolete
                     var tiles = new List<TileInfo>(_source.Schema.GetTileInfos(extent, level));
                     var tileWidth = _source.Schema.GetTileWidth(level);
                     var tileHeight = _source.Schema.GetTileWidth(level);

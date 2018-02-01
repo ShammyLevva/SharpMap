@@ -271,7 +271,7 @@ namespace SharpMap.Forms.ToolBar
         {
             private readonly MapBox _mapBox;
             private readonly List<Envelope> _zoomExtentStack = new List<Envelope>();
-            private bool _blockStoringWhenPanning;
+            //private bool _blockStoringWhenPanning;
 
             /// <summary>
             /// Value indicating if zoom changes that have been invoked by user interaction should be saved or not
@@ -513,8 +513,10 @@ namespace SharpMap.Forms.ToolBar
             }
 
             Visible = true;
-            _zoomExtentStack = new ZoomExtentStack(MapControl);
-            _zoomExtentStack.StoreExtents = true;
+            _zoomExtentStack = new ZoomExtentStack(MapControl)
+            {
+                StoreExtents = true
+            };
 
             mvpLock = new MapViewportLock(MapControl.Map);
 
@@ -526,8 +528,10 @@ namespace SharpMap.Forms.ToolBar
             if (sender != MapControl)
                 return;
 
-            _zoomExtentStack = new ZoomExtentStack(MapControl);
-            _zoomExtentStack.StoreExtents = true;
+            _zoomExtentStack = new ZoomExtentStack(MapControl)
+            {
+                StoreExtents = true
+            };
 
             _predefinedScales.Text = string.Format(NumberFormatInfo.CurrentInfo, "1:{0}", 
                 Math.Round(MapControl.Map.GetMapScale(_dpiX), 0, MidpointRounding.AwayFromZero));
@@ -624,8 +628,7 @@ namespace SharpMap.Forms.ToolBar
             if (!text.StartsWith("1:"))
                  text = "1:" + text;
 
-            double val;
-            if (!double.TryParse(text.Substring(2), NumberStyles.Float, NumberFormatInfo.CurrentInfo, out val))
+            if (!double.TryParse(text.Substring(2), NumberStyles.Float, NumberFormatInfo.CurrentInfo, out double val))
                 return;
 
             //_predefinedScales.Text = text;

@@ -56,11 +56,13 @@ namespace SharpMap.Data.Providers
         {
         }
 
-        /// <summary>
-        /// Creates a shapefile header using the provided <see cref="shpPath"/>
-        /// </summary>
-        /// <param name="shpPath">The path to the shapefile</param>
+#pragma warning disable CS1574 // XML comment has cref attribute that could not be resolved
+                              /// <summary>
+                              /// Creates a shapefile header using the provided <see cref="shpPath"/>
+                              /// </summary>
+                              /// <param name="shpPath">The path to the shapefile</param>
         public static ShapeFileHeader Read(string shpPath)
+#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
         {
             using (var s = new FileStream(shpPath, FileMode.Open, FileAccess.Read, FileShare.Read))
                 return new ShapeFileHeader(s);

@@ -707,9 +707,7 @@ namespace SharpMap.Forms
         {
             if (CustomTool != null)
                 CustomTool.Enabled = false;
-            var handler = ActiveToolChanging;
-            if (handler != null)
-                handler(toolPre, toolNew, cea);
+            ActiveToolChanging?.Invoke(toolPre, toolNew, cea);
         }
 
         /// <summary>
@@ -720,9 +718,7 @@ namespace SharpMap.Forms
         {
             if (CustomTool != null)
                 CustomTool.Enabled = true;
-            var handler = ActiveToolChanged;
-            if (handler != null)
-                handler(activeTool);
+            ActiveToolChanged?.Invoke(activeTool);
         }
 
         /// <summary>
@@ -808,12 +804,14 @@ namespace SharpMap.Forms
 
         private volatile bool _isDisposed;
 
-        /// <summary>
-        /// Dispose method
-        /// </summary>
-        /// <param name="disposing">A parameter indicating that this method is called from either a call to <see cref="Control.Dispose()"/> (<c>true</c>)
-        /// or the finalizer (<c>false</c>)</param>
+#pragma warning disable CS1574 // XML comment has cref attribute that could not be resolved
+                              /// <summary>
+                              /// Dispose method
+                              /// </summary>
+                              /// <param name="disposing">A parameter indicating that this method is called from either a call to <see cref="Control.Dispose()"/> (<c>true</c>)
+                              /// or the finalizer (<c>false</c>)</param>
         protected override void Dispose(bool disposing)
+#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
         {
             if (_isDisposed || IsDisposed)
                 return;
@@ -1169,10 +1167,7 @@ namespace SharpMap.Forms
 
                 try
                 {
-                    if (MapRefreshed != null)
-                    {
-                        MapRefreshed(this, null);
-                    }
+                    MapRefreshed?.Invoke(this, null);
                 }
                 catch (Exception ee)
                 {
@@ -1502,8 +1497,7 @@ namespace SharpMap.Forms
             var p = _map.ImageToWorld(new Point(e.X, e.Y));
 
             // Raise event
-            if (MouseDown != null)
-                MouseDown(p, e);
+            MouseDown?.Invoke(p, e);
 
             // Do we have a custom tool
             if (UseCurrentTool)
@@ -1586,8 +1580,7 @@ namespace SharpMap.Forms
             var p = _map.ImageToWorld(new Point(e.X, e.Y));
 
             // Raise event
-            if (MouseMove != null)
-                MouseMove(p, e);
+            MouseMove?.Invoke(p, e);
 
             // Do we have a custom tool
             if (UseCurrentTool)
@@ -1621,8 +1614,7 @@ namespace SharpMap.Forms
 
             if (_dragging)
             {
-                if (MouseDrag != null)
-                    MouseDrag(p, e);
+                MouseDrag?.Invoke(p, e);
 
                 //Pan can be if we have ActiveTool Pan and not doing a ShiftButtonZoom-Operation
                 bool isPanOperation = _activeTool == Tools.Pan &&
@@ -1675,8 +1667,7 @@ namespace SharpMap.Forms
                         _scaling = 1 + (_dragEndPoint.Y - _dragStartPoint.Y)*0.1f;
 
                     _map.Zoom = _orgScale/_scaling;
-                    if (MapZooming != null)
-                        MapZooming(_map.Zoom);
+                    MapZooming?.Invoke(_map.Zoom);
 
                     Invalidate(ClientRectangle);
                 }
@@ -1734,7 +1725,7 @@ namespace SharpMap.Forms
         /// <param name="e">A <see cref="T:System.ComponentModel.CancelEventArgs"/> that contains the event arguments.</param>
         protected virtual void OnMapChanging(CancelEventArgs e)
         {
-            if (MapChanging != null) MapChanging(this, e);
+            MapChanging?.Invoke(this, e);
             if (e.Cancel)
                 return;
 
@@ -1763,8 +1754,7 @@ namespace SharpMap.Forms
             // Assign the map to the custom tool, too.
             if (_currentTool != null) _currentTool.Map = _map;
 
-            var handler = MapChanged;
-            if (handler != null) handler(this, e);
+            MapChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1773,9 +1763,7 @@ namespace SharpMap.Forms
         /// <param name="zoom"></param>
         protected virtual void OnMapZoomChanged(double zoom)
         {
-            var handler = MapZoomChanged;
-            if (handler != null)
-                handler(zoom);
+            MapZoomChanged?.Invoke(zoom);
         }
 
         /// <summary>
@@ -1784,9 +1772,7 @@ namespace SharpMap.Forms
         /// <param name="center"></param>
         protected virtual void OnMapCenterChanged(Coordinate center)
         {
-            var handler = MapCenterChanged;
-            if (handler != null)
-                handler(center);
+            MapCenterChanged?.Invoke(center);
         }
 
         void HandleRefreshNeeded(object sender, EventArgs e)
@@ -2059,8 +2045,7 @@ namespace SharpMap.Forms
             var p = _map.ImageToWorld(new Point(e.X, e.Y));
 
             // Raise event
-            if (MouseUp != null)
-                MouseUp(p, e);
+            MouseUp?.Invoke(p, e);
 
             // Do we have a custom tool
             if (UseCurrentTool)
@@ -2177,9 +2162,7 @@ namespace SharpMap.Forms
                     /*|| _activeTool == Tools.QueryPolygon*/)
                 {
                     //OnMouseUpQuery(e);
-                    var mqs = MapQueryStarted;
-                    if (mqs != null)
-                        mqs(this, new EventArgs());
+                    MapQueryStarted?.Invoke(this, new EventArgs());
 
                     var layersToQuery = GetLayersToQuery();
 
@@ -2192,9 +2175,8 @@ namespace SharpMap.Forms
                             var isPoint = false;
                             if (_dragging)
                             {
-                                Coordinate lowerLeft, upperRight;
                                 GetBounds(_map.ImageToWorld(_dragStartPoint), _map.ImageToWorld(_dragEndPoint),
-                                    out lowerLeft, out upperRight);
+                                    out Coordinate lowerLeft, out Coordinate upperRight);
 
                                 bounding = new Envelope(lowerLeft, upperRight);
                             }
@@ -2251,9 +2233,7 @@ namespace SharpMap.Forms
                             }
                         }
                     }
-                    var mqd = MapQueryDone;
-                    if (mqd != null)
-                        mqd(this, new EventArgs());
+                    MapQueryDone?.Invoke(this, new EventArgs());
                 }
 
                 else if (_activeTool == Tools.ZoomWindow ||
@@ -2262,16 +2242,14 @@ namespace SharpMap.Forms
                     if (_rectangle.Width > 0 && _rectangle.Height > 0)
                     {
                         var zoomWindowStartPoint = _dragStartPoint;
-                        var zoomWindowEndPoint = new PointF(e.X, e.Y); 
-                    
-                        Coordinate lowerLeft;
-                        Coordinate upperRight;
+                        var zoomWindowEndPoint = new PointF(e.X, e.Y);
+
                         GetBounds(
-                            _map.ImageToWorld(zoomWindowStartPoint), 
+                            _map.ImageToWorld(zoomWindowStartPoint),
                             _map.ImageToWorld(zoomWindowEndPoint),
-                            out lowerLeft, 
-                            out upperRight);
-                            
+                            out Coordinate lowerLeft,
+                            out Coordinate upperRight);
+
                         _dragEndPoint.X = 0;
                         _dragEndPoint.Y = 0;
 
@@ -2295,19 +2273,18 @@ namespace SharpMap.Forms
                 }
                 else if (_activeTool == Tools.DrawPoint)
                 {
-                    if (GeometryDefined != null)
-                    {
-                        GeometryDefined(_map.Factory.CreatePoint(Map.ImageToWorld(new PointF(e.X, e.Y))));
-                    }
+                    GeometryDefined?.Invoke(_map.Factory.CreatePoint(Map.ImageToWorld(new PointF(e.X, e.Y))));
                 }
                 else if (_activeTool == Tools.DrawPolygon || _activeTool == Tools.DrawLine)
                 {
                     //pointArray = null;
                     if (_pointArray == null)
                     {
-                        _pointArray = new List<Coordinate>(2);
-                        _pointArray.Add(Map.ImageToWorld(e.Location));
-                        _pointArray.Add(Map.ImageToWorld(e.Location));
+                        _pointArray = new List<Coordinate>(2)
+                        {
+                            Map.ImageToWorld(e.Location),
+                            Map.ImageToWorld(e.Location)
+                        };
                     }
                     else
                     {
@@ -2344,8 +2321,7 @@ namespace SharpMap.Forms
                 case MapQueryType.LayerByIndex:
                     if (_map.Layers.Count > _queryLayerIndex && _queryLayerIndex > -1)
                     {
-                        var layer = _map.Layers[_queryLayerIndex] as ICanQueryLayer;
-                        if (layer != null)
+                        if (_map.Layers[_queryLayerIndex] is ICanQueryLayer layer)
                         {
                             layersToQuery.Add(layer);
                         }
@@ -2355,9 +2331,8 @@ namespace SharpMap.Forms
                 case MapQueryType.VisibleLayers:
                     foreach (var layer in _map.Layers)
                     {
-                        var cqLayer = layer as ICanQueryLayer;
-                        double visibleLevel = layer.VisibilityUnits == Styles.VisibilityUnits.ZoomLevel ? _map.Zoom  : _map.MapScale;
-                        if (cqLayer != null && layer.Enabled && layer.MinVisible < visibleLevel &&
+                        double visibleLevel = layer.VisibilityUnits == Styles.VisibilityUnits.ZoomLevel ? _map.Zoom : _map.MapScale;
+                        if (layer is ICanQueryLayer cqLayer && layer.Enabled && layer.MinVisible < visibleLevel &&
                             layer.MaxVisible >= visibleLevel && cqLayer.IsQueryEnabled)
                             layersToQuery.Add(cqLayer);
                     }
@@ -2367,8 +2342,7 @@ namespace SharpMap.Forms
                 default:
                     foreach (var layer in _map.Layers)
                     {
-                        var cqLayer = layer as ICanQueryLayer;
-                        if (cqLayer != null && cqLayer.IsQueryEnabled)
+                        if (layer is ICanQueryLayer cqLayer && cqLayer.IsQueryEnabled)
                             layersToQuery.Add(cqLayer);
                     }
                     break;

@@ -132,7 +132,9 @@ namespace SharpMap.Layers
         {
             var bbox = map.Envelope;
             var extent = new Extent(bbox.MinX, bbox.MinY, bbox.MaxX, bbox.MaxY);
+#pragma warning disable CS0618 // Type or member is obsolete
             var level = BruTile.Utilities.GetNearestLevel(_source.Schema.Resolutions, map.PixelSize);
+#pragma warning restore CS0618 // Type or member is obsolete
             var tiles = _source.Schema.GetTileInfos(extent, level);
             
             //Abort previous running Threads

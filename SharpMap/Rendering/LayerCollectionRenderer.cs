@@ -156,7 +156,9 @@ namespace SharpMap.Rendering
         {
             try
             {
+#pragma warning disable CS0618 // Type or member is obsolete
                 layer.Render(g, map);
+#pragma warning restore CS0618 // Type or member is obsolete
             }
             catch (Exception e)
             {

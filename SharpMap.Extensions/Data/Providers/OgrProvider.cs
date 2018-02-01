@@ -432,7 +432,9 @@ namespace SharpMap.Data.Providers
             {
                 using (var gr = ogrFeature.GetGeometryRef())
                 {
+#pragma warning disable CS0612 // Type or member is obsolete
                     var reader = new WKBReader(Factory);
+#pragma warning restore CS0612 // Type or member is obsolete
                     //var g = ParseOgrGeometry(gr, Factory);
                     var g = new OgrGeometryReader(Factory).Read(gr) ;
                     return g;
@@ -786,6 +788,7 @@ namespace SharpMap.Data.Providers
         /// </summary>
         /// <param name="table">The name of the table</param>
         /// <param name="geometryType">The geometry type</param>
+        /// <param name="srid"></param>
         /// <param name="driver">The driver</param>
         /// <param name="connection">The connection string</param>
         /// <param name="driverOptions">The options for the driver</param>
@@ -962,8 +965,6 @@ namespace SharpMap.Data.Providers
 
                 case "System.DateTime":
                     return OgrFieldType.OFTDateTime;
-                    return OgrFieldType.OFTDate;
-                    return OgrFieldType.OFTTime;
 
                 case "System.Byte[]":
                     return OgrFieldType.OFTBinary;
@@ -991,7 +992,6 @@ namespace SharpMap.Data.Providers
                 //don't know when this is supposed to happen
                 case "xxx":
                     return OgrFieldType.OFTWideString;
-                    return OgrFieldType.OFTWideStringList;
             }
             throw new NotSupportedException();
         }
@@ -1013,10 +1013,12 @@ namespace SharpMap.Data.Providers
                 _factory = factory;
             }
 
+#pragma warning disable CS0612 // Type or member is obsolete
             /// <summary>
             /// A WKB reader
             /// </summary>
             private WKBReader Reader { get { return _reader ?? (_reader = new WKBReader(_factory)); } }
+#pragma warning restore CS0612 // Type or member is obsolete
 
             /// <summary>
             /// Method to read the geometry

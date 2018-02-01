@@ -35,10 +35,12 @@ namespace SharpMap.Data.Providers
         /// </summary>
         public bool UseMemoryCache { get; set; }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         /// <summary>
         /// Gets or sets a value indicating how to create 
         /// </summary>
         public ShapeFile.SpatialIndexCreation SpatialIndexCreationOption { get; set; }
+#pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>
         /// Creates a Shapefile provider
@@ -46,7 +48,9 @@ namespace SharpMap.Data.Providers
         /// <returns></returns>
         public IProvider Create()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             ShapeFile.SpatialIndexCreationOption = SpatialIndexCreationOption;
+#pragma warning restore CS0618 // Type or member is obsolete
             return new ShapeFile(Filename, UseFilebasedIndex, UseMemoryCache);
         }
     }

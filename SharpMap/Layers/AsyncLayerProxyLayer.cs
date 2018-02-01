@@ -325,7 +325,9 @@ namespace SharpMap.Layers
             using (var g = Graphics.FromImage(tile))
             {
                 g.Clear(Color.Transparent);
+#pragma warning disable CS0618 // Type or member is obsolete
                 _baseLayer.Render(g, map);
+#pragma warning restore CS0618 // Type or member is obsolete
                 map.Layers.Clear();
             }
 

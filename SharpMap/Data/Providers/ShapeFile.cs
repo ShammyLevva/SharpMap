@@ -109,7 +109,9 @@ namespace SharpMap.Data.Providers
         static ShapeFile()
         {
             SpatialIndexFactory = new QuadTreeFactory();
+#pragma warning disable CS0618 // Type or member is obsolete
             SpatialIndexCreationOption = SpatialIndexCreation.Recursive;
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 #endif
 		private readonly bool _useMemoryCache;
@@ -733,12 +735,14 @@ namespace SharpMap.Data.Providers
             }
             return geom;
         }
-            /// <summary>
-		/// Returns the geometry corresponding to the Object ID
-		/// </summary>
-		/// <remarks>FilterDelegate is no longer applied to this ge</remarks>
-		/// <param name="oid">Object ID</param>
-		/// <returns>The geometry at the Id</returns>
+        /// <summary>
+        /// Returns the geometry corresponding to the Object ID
+        /// </summary>
+        /// <remarks>FilterDelegate is no longer applied to this ge</remarks>
+        /// <param name="oid">Object ID</param>
+        /// <param name="br"></param>
+        /// <param name="dbf"></param>
+        /// <returns>The geometry at the Id</returns>
         private IGeometry GetGeometryByID(uint oid, BinaryReader br, DbaseReader dbf)
         {
             if (_useMemoryCache)

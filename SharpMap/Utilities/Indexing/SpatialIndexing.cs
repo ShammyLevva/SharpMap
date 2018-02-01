@@ -697,19 +697,27 @@ namespace SharpMap.Utilities.SpatialIndexing
     {
         private static readonly ILog _logger = LogManager.GetLogger(typeof (QuadTreeFactory));
 
+#pragma warning disable CS0618 // Type or member is obsolete
         private static ShapeFile.SpatialIndexCreation _spatialIndexSpatialIndexCreationOption;
+#pragma warning restore CS0618 // Type or member is obsolete
 
+#pragma warning disable CS0618 // Type or member is obsolete
         /// <summary>
         /// Gets or sets the default spatial index creation option
         /// </summary>
         public static ShapeFile.SpatialIndexCreation SpatialIndexCreationOption
+#pragma warning restore CS0618 // Type or member is obsolete
         {
             get { return _spatialIndexSpatialIndexCreationOption; }
             set
             {
                 if (
+#pragma warning disable CS0618 // Type or member is obsolete
                     !((value == ShapeFile.SpatialIndexCreation.Linear) ||
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
                       (value == ShapeFile.SpatialIndexCreation.Recursive)))
+#pragma warning restore CS0618 // Type or member is obsolete
                     throw new ArgumentException("value");
 
                 _spatialIndexSpatialIndexCreationOption = value;
@@ -739,7 +747,9 @@ namespace SharpMap.Utilities.SpatialIndexing
         {
             switch (SpatialIndexCreationOption)
             {
+#pragma warning disable CS0618 // Type or member is obsolete
                 case ShapeFile.SpatialIndexCreation.Linear:
+#pragma warning restore CS0618 // Type or member is obsolete
                     return CreateSpatialIndexLinear(extent, expectedNumberOfEntries, entries);
                 default:
                     return CreateSpatialIndexRecursive(extent, expectedNumberOfEntries, entries);

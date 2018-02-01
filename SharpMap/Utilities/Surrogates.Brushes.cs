@@ -24,6 +24,7 @@ namespace SharpMap.Utilities
             /// <param name="obj">The object to serialize.</param>
             /// <param name="info">The SerializationInfo to populate with data.</param>
             /// <param name="context">The destination for this serialization.</param>
+            /// <param name="selector"></param>
             object ISerializationSurrogate.SetObjectData(Object obj, SerializationInfo info, StreamingContext context,
                 ISurrogateSelector selector)
             {

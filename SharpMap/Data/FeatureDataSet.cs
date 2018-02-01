@@ -125,8 +125,7 @@ namespace SharpMap.Data
                 for (int j = 0; j < dt.Constraints.Count; j++)
                 {
                     Constraint c = dt.Constraints[j];
-                    var fk = c as ForeignKeyConstraint;
-                    if (fk != null)
+                    if (c is ForeignKeyConstraint fk)
                     {
                         string constraintName = c.ConstraintName;
                         var parentInfo = new int[fk.RelatedColumns.Length + 1];
@@ -298,8 +297,10 @@ namespace SharpMap.Data
                 }
 
                 //Create the Relation, without any constraints[Assumption: The constraints are added earlier than the relations]
-                var rel = new DataRelation(relationName, parentkeyColumns, childkeyColumns, false);
-                rel.Nested = isNested;
+                var rel = new DataRelation(relationName, parentkeyColumns, childkeyColumns, false)
+                {
+                    Nested = isNested
+                };
 
                 //Extended Properties.
                 Debug.Assert(extendedProperties != null);
@@ -356,7 +357,9 @@ namespace SharpMap.Data
                     var rowIndex = reader.ReadInt32();
                     var row = (FeatureDataRow) Rows[rowIndex];
                     var srid = reader.ReadInt32();
+#pragma warning disable CS0612 // Type or member is obsolete
                     var wkbReader = new WKBReader(GeometryServiceProvider.Instance.CreateGeometryFactory(srid));
+#pragma warning restore CS0612 // Type or member is obsolete
                     var wkbSize = reader.ReadInt32();
                     var wkb = reader.ReadBytes(wkbSize);
                     row.Geometry = wkbReader.Read(wkb);

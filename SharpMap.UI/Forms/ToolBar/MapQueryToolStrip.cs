@@ -164,7 +164,9 @@ namespace SharpMap.Forms.ToolBar
             if (MapControl == null) return;
             switch (tool)
             {
+#pragma warning disable CS0618 // Type or member is obsolete
                 case MapBox.Tools.QueryGeometry:
+#pragma warning restore CS0618 // Type or member is obsolete
                     _queryGeometry.Checked = true;
                     _queryWindow.Checked = false;
                     break;
@@ -259,7 +261,9 @@ namespace SharpMap.Forms.ToolBar
             if (sender == _queryWindow)
                 newTool = MapBox.Tools.QueryBox;
             else if (sender == _queryGeometry)
+#pragma warning disable CS0618 // Type or member is obsolete
                 newTool = MapBox.Tools.QueryGeometry;
+#pragma warning restore CS0618 // Type or member is obsolete
             else
             {
                 if (Logger.IsWarnEnabled)

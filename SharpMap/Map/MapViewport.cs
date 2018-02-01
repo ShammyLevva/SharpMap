@@ -37,7 +37,9 @@ namespace SharpMap
             Center = env.Centre;
 
             PixelAspectRatio = pixelAspectRatio;
+#pragma warning disable CS0618 // Type or member is obsolete
             PixelWidth = PixelSize = env.Width/size.Width;
+#pragma warning restore CS0618 // Type or member is obsolete
             PixelHeight = PixelWidth*pixelAspectRatio;
 
             Zoom = env.Width;

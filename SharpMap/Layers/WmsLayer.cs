@@ -146,8 +146,7 @@ namespace SharpMap.Layers
 
         private static Client GetClient(string capabilitiesUrl, IWebProxy proxy, ICredentials credentials, TimeSpan cacheTime)
         {
-            Client result;
-            if (!Web.HttpCacheUtility.TryGetValue("SharpMap_WmsClient_" + capabilitiesUrl, out result))
+            if (!Web.HttpCacheUtility.TryGetValue("SharpMap_WmsClient_" + capabilitiesUrl, out Client result))
             {
                 if (Logger.IsDebugEnabled)
                     Logger.Debug("Creating new client for url " + capabilitiesUrl);

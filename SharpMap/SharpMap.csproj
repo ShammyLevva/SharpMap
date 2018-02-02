@@ -361,8 +361,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>copy /Y $(TargetPath) D:\Programming\GitRepo\FTAnalyzer\FTAnalyser\Resources\Lib\$(TargetFileName)</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)SharpMap.targets" />
   <Target Name="BeforeBuild">

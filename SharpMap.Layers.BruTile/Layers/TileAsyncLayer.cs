@@ -31,6 +31,7 @@ namespace SharpMap.Layers
 
         int _numPendingDownloads = 0;
         bool _onlyRedrawWhenComplete = false;
+        private float _opacity = 1f;
 
         /// <summary>
         /// Gets or Sets a value indicating if to redraw the map only when all tiles are downloaded
@@ -144,6 +145,7 @@ namespace SharpMap.Layers
             {
                 if (!_transparentColor.IsEmpty)
                     ia.SetColorKey(_transparentColor, _transparentColor);
+                ia.SetColorMatrix(new ColorMatrix { Matrix33 = _opacity }, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 #if !PocketPC
                 ia.SetWrapMode(WrapMode.TileFlipXY);
 #endif
@@ -192,9 +194,7 @@ namespace SharpMap.Layers
                             if (res)
                             {
                                 Interlocked.Decrement(ref _numPendingDownloads);
-                                var e = DownloadProgressChanged;
-                                if (e != null)
-                                    e(_numPendingDownloads);
+                                DownloadProgressChanged?.Invoke(_numPendingDownloads);
                             }
 
                         }, token);
@@ -347,6 +347,7 @@ namespace SharpMap.Layers
                 {
                     if (!_transparentColor.IsEmpty)
                         ia.SetColorKey(_transparentColor, _transparentColor);
+                    ia.SetColorMatrix(new ColorMatrix { Matrix33 = _opacity }, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 #if !PocketPC
                     ia.SetWrapMode(WrapMode.TileFlipXY);
 #endif
@@ -357,8 +358,31 @@ namespace SharpMap.Layers
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating the opacity degree
+        /// 1.0 = No transparency (Default)
+        /// 0.0 = full transparency
+        /// </summary>
+        public new float Opacity
+        {
+            get { return _opacity; }
+            set
+            {
+                if (value < 0f) value = 0f;
+                if (value > 1f) value = 1f;
+                _opacity = value;
+            }
+        }
 
+        /// <summary>
+        /// Set the opacity on the drawn image, this method updates the ImageAttributes with opacity-values and is used when sharpmap draws the image, the the wms-server
+        /// 1.0 = No transparency
+        /// 0.0 = full transparency
+        /// </summary>
+        /// <param name="opacity"></param>
+        public new void SetOpacity(float opacity)
+        {
+            Opacity = opacity;
+        }
     }
-
-
 }

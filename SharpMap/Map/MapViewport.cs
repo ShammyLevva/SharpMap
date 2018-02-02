@@ -27,6 +27,7 @@ namespace SharpMap
         /// <param name="size">The size of the viewport</param>
         /// <param name="pixelAspectRatio">A ratio between width and height</param>
         /// <param name="mapTransform">An affine map transform matrix</param>
+        /// <param name="mapTransformInverted"></param>
         public MapViewport(Guid mapId, int srid, Envelope env, Size size, double pixelAspectRatio, Matrix mapTransform, Matrix mapTransformInverted)
         {
             ID = mapId;

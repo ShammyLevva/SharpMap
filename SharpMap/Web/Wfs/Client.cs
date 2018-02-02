@@ -257,8 +257,10 @@ namespace SharpMap.Web.Wfs
         public Client(byte[] byteXml)
         {
             Stream stream = new MemoryStream(byteXml);
-            var r = new XmlTextReader(stream);
-            r.XmlResolver = null;
+            var r = new XmlTextReader(stream)
+            {
+                XmlResolver = null
+            };
 
             _xmlDoc = new XmlDocument();
             XmlDoc.XmlResolver = null;
@@ -334,11 +336,15 @@ namespace SharpMap.Web.Wfs
 
             try
             {
-                var xmlTextReader = new XmlTextReader(_capabilitiesUrl, stream);
-                xmlTextReader.XmlResolver = null;
+                var xmlTextReader = new XmlTextReader(_capabilitiesUrl, stream)
+                {
+                    XmlResolver = null
+                };
 
-                _xmlDoc = new XmlDocument();
-                _xmlDoc.XmlResolver = null;
+                _xmlDoc = new XmlDocument
+                {
+                    XmlResolver = null
+                };
                 _xmlDoc.Load(xmlTextReader);
                 _nsmgr = new XmlNamespaceManager(_xmlDoc.NameTable);
                 return _xmlDoc;
@@ -534,13 +540,13 @@ namespace SharpMap.Web.Wfs
         private void ParseService(XmlNode xnlService)
         {
             XmlNode node = xnlService.SelectSingleNode("sm:Title", _nsmgr);
-            _serviceIdentification.Title = (node != null ? node.InnerText : null);
+            _serviceIdentification.Title = (node?.InnerText);
             node = xnlService.SelectSingleNode("sm:Abstract", _nsmgr);
-            _serviceIdentification.Abstract = (node != null ? node.InnerText : null);
+            _serviceIdentification.Abstract = (node?.InnerText);
             node = xnlService.SelectSingleNode("sm:Fees", _nsmgr);
-            _serviceIdentification.Fees = (node != null ? node.InnerText : null);
+            _serviceIdentification.Fees = (node?.InnerText);
             node = xnlService.SelectSingleNode("sm:AccessConstraints", _nsmgr);
-            _serviceIdentification.AccessConstraints = (node != null ? node.InnerText : null);
+            _serviceIdentification.AccessConstraints = (node?.InnerText);
 
             XmlNodeList xnlKeywords = xnlService.SelectNodes("sm:KeywordList/sm:Keyword", _nsmgr);
             if (xnlKeywords != null)
@@ -558,9 +564,9 @@ namespace SharpMap.Web.Wfs
         private void ParseServiceIdentification(XmlNode xnlServiceId)
         {
             XmlNode node = xnlServiceId.SelectSingleNode("ows:Title", _nsmgr);
-            _serviceIdentification.Title = (node != null ? node.InnerText : null);
+            _serviceIdentification.Title = (node?.InnerText);
             node = xnlServiceId.SelectSingleNode("ows:Abstract", _nsmgr);
-            _serviceIdentification.Abstract = (node != null ? node.InnerText : null);
+            _serviceIdentification.Abstract = (node?.InnerText);
             XmlNodeList xnlKeywords = xnlServiceId.SelectNodes("ows:Keywords/ows:Keyword", _nsmgr);
             if (xnlKeywords != null)
             {
@@ -569,30 +575,30 @@ namespace SharpMap.Web.Wfs
                     _serviceIdentification.Keywords[i] = xnlKeywords[i].InnerText;
             }
             node = xnlServiceId.SelectSingleNode("ows:ServiceType", _nsmgr);
-            _serviceIdentification.ServiceType = (node != null ? node.InnerText : null);
+            _serviceIdentification.ServiceType = (node?.InnerText);
             node = xnlServiceId.SelectSingleNode("ows:ServiceTypeVersion", _nsmgr);
-            _serviceIdentification.ServiceTypeVersion = (node != null ? node.InnerText : null);
+            _serviceIdentification.ServiceTypeVersion = (node?.InnerText);
             node = xnlServiceId.SelectSingleNode("ows:Fees", _nsmgr);
-            _serviceIdentification.Fees = (node != null ? node.InnerText : null);
+            _serviceIdentification.Fees = (node?.InnerText);
             node = xnlServiceId.SelectSingleNode("ows:AccessConstraints", _nsmgr);
-            _serviceIdentification.AccessConstraints = (node != null ? node.InnerText : null);
+            _serviceIdentification.AccessConstraints = (node?.InnerText);
 
         }
 
         private void ParseServiceProvider(XmlNode xnlServiceProvider)
         {
             XmlNode node = xnlServiceProvider.SelectSingleNode("ows:ProviderName", _nsmgr);
-            _serviceProvider.ProviderName = (node != null ? node.InnerText : null);
+            _serviceProvider.ProviderName = (node?.InnerText);
             node = xnlServiceProvider.SelectSingleNode("ows:ProviderSite", _nsmgr);
-            _serviceProvider.ProviderSite = (node != null ? node.InnerText : null);
+            _serviceProvider.ProviderSite = (node?.InnerText);
             XmlNode nodeServiceContact = xnlServiceProvider.SelectSingleNode("ows:ServiceContact", _nsmgr);
             
             if(nodeServiceContact != null)
             {
                 XmlNode node2 = nodeServiceContact.SelectSingleNode("ows:IndividualName", _nsmgr);
-                _serviceProvider.ServiceContactDetail.IndividualName = (node2 != null ? node2.InnerText : null);
+                _serviceProvider.ServiceContactDetail.IndividualName = (node2?.InnerText);
                 node2 = node2.SelectSingleNode("ows:PositionName", _nsmgr);
-                _serviceProvider.ServiceContactDetail.PositionName = (node2 != null ? node2.InnerText : null);
+                _serviceProvider.ServiceContactDetail.PositionName = (node2?.InnerText);
 
                 XmlNode nodeContactInfo = xnlServiceProvider.SelectSingleNode("ows:ContactInfo", _nsmgr);
 
@@ -604,37 +610,37 @@ namespace SharpMap.Web.Wfs
                     if(nodePhone != null)
                     {
                         XmlNode node4 = nodePhone.SelectSingleNode("ows:Voice", _nsmgr);
-                        _serviceProvider.ServiceContactDetail.ContactInformation.Telephone.Voice = (node4 != null ? node4.InnerText : null);
+                        _serviceProvider.ServiceContactDetail.ContactInformation.Telephone.Voice = (node4?.InnerText);
                         node4 = node.SelectSingleNode("ows:Facsimile", _nsmgr);
-                        _serviceProvider.ServiceContactDetail.ContactInformation.Telephone.Facsimile = (node4 != null ? node4.InnerText : null);
+                        _serviceProvider.ServiceContactDetail.ContactInformation.Telephone.Facsimile = (node4?.InnerText);
                     }
 
                     if(nodeAddress != null)
                     {
                         XmlNode node5 = nodeAddress.SelectSingleNode("ows:DeliveryPoint", _nsmgr);
-                        _serviceProvider.ServiceContactDetail.ContactInformation.AddressDetails.DeliveryPoint = (node5 != null ? node5.InnerText : null);
+                        _serviceProvider.ServiceContactDetail.ContactInformation.AddressDetails.DeliveryPoint = (node5?.InnerText);
                         node5 = nodeAddress.SelectSingleNode("ows:City", _nsmgr);
-                        _serviceProvider.ServiceContactDetail.ContactInformation.AddressDetails.City = (node5 != null ? node5.InnerText : null);
+                        _serviceProvider.ServiceContactDetail.ContactInformation.AddressDetails.City = (node5?.InnerText);
                         node5 = nodeAddress.SelectSingleNode("ows:AdministrativeArea", _nsmgr);
-                        _serviceProvider.ServiceContactDetail.ContactInformation.AddressDetails.AdministrativeArea = (node5 != null ? node5.InnerText : null);
+                        _serviceProvider.ServiceContactDetail.ContactInformation.AddressDetails.AdministrativeArea = (node5?.InnerText);
                         node5 = nodeAddress.SelectSingleNode("ows:PostalCode", _nsmgr);
-                        _serviceProvider.ServiceContactDetail.ContactInformation.AddressDetails.PostalCode = (node5 != null ? node5.InnerText : null);
+                        _serviceProvider.ServiceContactDetail.ContactInformation.AddressDetails.PostalCode = (node5?.InnerText);
                         node5 = nodeAddress.SelectSingleNode("ows:Country", _nsmgr);
-                        _serviceProvider.ServiceContactDetail.ContactInformation.AddressDetails.Country= (node5 != null ? node5.InnerText : null);
+                        _serviceProvider.ServiceContactDetail.ContactInformation.AddressDetails.Country= (node5?.InnerText);
                         node5 = nodeAddress.SelectSingleNode("ows:ElectronicMailAddress", _nsmgr);
-                        _serviceProvider.ServiceContactDetail.ContactInformation.AddressDetails.ElectronicMailAddress = (node5 != null ? node5.InnerText : null);
+                        _serviceProvider.ServiceContactDetail.ContactInformation.AddressDetails.ElectronicMailAddress = (node5?.InnerText);
                     }
 
                     XmlNode node6 = nodeContactInfo.SelectSingleNode("sm:OnlineResource/@xlink:href", _nsmgr);
-                    _serviceProvider.ServiceContactDetail.ContactInformation.OnlineResource = (node6 != null ? node6.InnerText : null);
+                    _serviceProvider.ServiceContactDetail.ContactInformation.OnlineResource = (node6?.InnerText);
                     node6 = nodeContactInfo.SelectSingleNode("ows:HoursOfService", _nsmgr);
-                    _serviceProvider.ServiceContactDetail.ContactInformation.HoursOfService = (node6 != null ? node6.InnerText : null);
+                    _serviceProvider.ServiceContactDetail.ContactInformation.HoursOfService = (node6?.InnerText);
                     node6 = nodeContactInfo.SelectSingleNode("ows:ContactInstructions", _nsmgr);
-                    _serviceProvider.ServiceContactDetail.ContactInformation.ContactInstructions = (node6 != null ? node6.InnerText : null);
+                    _serviceProvider.ServiceContactDetail.ContactInformation.ContactInstructions = (node6?.InnerText);
                 }
 
                 node2 = nodeServiceContact.SelectSingleNode("ows:Role", _nsmgr);
-                _serviceProvider.ServiceContactDetail.Role = (node2 != null ? node2.InnerText : null);
+                _serviceProvider.ServiceContactDetail.Role = (node2?.InnerText);
             }
         }
 

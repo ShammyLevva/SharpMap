@@ -931,9 +931,10 @@ namespace SharpMap.Data.Providers
                     default:
                         geomFactory = new UnspecifiedGeometryFactory_WFS1_0_0_GML2(_httpClientUtil, _featureTypeInfo,
                                                                                    _multiGeometries, _quickGeometries,
-                                                                                   _labelInfo);
-
-                        geomFactory.AxisOrder = AxisOrder;
+                                                                                   _labelInfo)
+                        {
+                            AxisOrder = AxisOrder
+                        };
                         geoms = geomFactory.createGeometries();
 
                         return geoms;
@@ -1025,8 +1026,10 @@ namespace SharpMap.Data.Providers
                 if (bboxQuery != null)
                 {
                     WfsFeatureTypeInfo.BoundingBox bbox = new WfsFeatureTypeInfo.BoundingBox();
-                    NumberFormatInfo formatInfo = new NumberFormatInfo();
-                    formatInfo.NumberDecimalSeparator = ".";
+                    NumberFormatInfo formatInfo = new NumberFormatInfo
+                    {
+                        NumberDecimalSeparator = "."
+                    };
                     string bboxVal = null;
 
                     if (_wfsVersion == WFSVersionEnum.WFS1_0_0)
@@ -1292,9 +1295,11 @@ namespace SharpMap.Data.Providers
                 if (geomType.Contains(":"))
                     geomType = geomType.Substring(geomType.IndexOf(":") + 1);
 
-                WfsFeatureTypeInfo.GeometryInfo geomInfo = new WfsFeatureTypeInfo.GeometryInfo();
-                geomInfo._GeometryName = geomName;
-                geomInfo._GeometryType = geomType;
+                WfsFeatureTypeInfo.GeometryInfo geomInfo = new WfsFeatureTypeInfo.GeometryInfo
+                {
+                    _GeometryName = geomName,
+                    _GeometryType = geomType
+                };
                 _featureTypeInfo.Geometry = geomInfo;
             }
             finally

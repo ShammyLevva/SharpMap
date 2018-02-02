@@ -622,8 +622,7 @@ namespace SharpMap.Layers
 
             if (feature is ILineal)
             {
-                var line = feature as ILineString;
-                if (line != null)
+                if (feature is ILineString line)
                 {
                     if (style.IsTextOnPath == false)
                     {

@@ -405,7 +405,6 @@ namespace SharpMap.Forms
         private int _imageGeneration;
         private int _needToRefreshAfterWheel;
         private PreviewModes _previewMode;
-        private bool _isRefreshing;
         private List<Coordinate> _pointArray = new List<Coordinate>();
         private bool _showProgress;
         private bool _zoomToPointer = true;
@@ -1029,8 +1028,8 @@ namespace SharpMap.Forms
         private class GetImageEndResult
         {
             public Tools? Tool { get; set; }
-            public Envelope bbox { get; set; }
-            public int generation { get; set; }
+            public Envelope Bbox { get; set; }
+            public int Generation { get; set; }
         }
 
         private void GetImagesAsyncEnd(GetImageEndResult res)
@@ -1038,12 +1037,12 @@ namespace SharpMap.Forms
             // draw only if generation is larger than the current, else we have aldready drawn something newer
             // we must to check also IsHandleCreated because during disposal, the handle of the parent is detroyed sooner than progress bar's handle,
             // this leads to cross thread operation and exception because InvokeRequired returns false, but for the progress bar it is true.
-            if (res == null || res.generation < _imageGeneration || _isDisposed || !IsHandleCreated)
+            if (res == null || res.Generation < _imageGeneration || _isDisposed || !IsHandleCreated)
                 return;
 
 
             if (_logger.IsDebugEnabled)
-                _logger.DebugFormat("{2}: {0} - {1}", res.generation, res.bbox, DateTime.Now);
+                _logger.DebugFormat("{2}: {0} - {1}", res.Generation, res.Bbox, DateTime.Now);
 
 
             if ((_setActiveToolNoneDuringRedraw || ShowProgressUpdate) && InvokeRequired)
@@ -1125,7 +1124,7 @@ namespace SharpMap.Forms
                         lock (_paintImageLocker)
                         {
                             _image = bmp;
-                            _imageEnvelope = res.bbox;
+                            _imageEnvelope = res.Bbox;
                         }
                     }
 
@@ -1135,7 +1134,6 @@ namespace SharpMap.Forms
                             ActiveTool = res.Tool.Value;
 
                         _dragEndPoint = new Point(0, 0);
-                        _isRefreshing = false;
 
                         if (_setActiveToolNoneDuringRedraw)
                             Enabled = true;
@@ -1186,9 +1184,8 @@ namespace SharpMap.Forms
                 (Width == 0 || Height == 0)) return;
 
             Envelope bbox = _map.Envelope;
-            if (forceRefresh) // && _isRefreshing == false)
+            if (forceRefresh)
             {
-                _isRefreshing = true;
                 Tools oldTool = ActiveTool;
                 if (_setActiveToolNoneDuringRedraw)
                 {
@@ -1219,12 +1216,12 @@ namespace SharpMap.Forms
                         {
                             GetImagesAsync(bbox, generation);
                             GetImagesAsyncEnd(new GetImageEndResult
-                                {Tool = oldTool, bbox = bbox, generation = generation});
+                                {Tool = oldTool, Bbox = bbox, Generation = generation});
                         });
             }
             else
             {
-                GetImagesAsyncEnd(new GetImageEndResult {Tool = null, bbox = bbox, generation = _imageGeneration});
+                GetImagesAsyncEnd(new GetImageEndResult {Tool = null, Bbox = bbox, Generation = _imageGeneration});
             }
         }
 

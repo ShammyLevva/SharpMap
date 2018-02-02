@@ -821,7 +821,7 @@ namespace SharpMap.Layers
         private Envelope GetEnvelope()
         {
             var boxes = new Collection<Envelope>();
-            var sridBoxes = getBoundingBoxes(RootLayer);
+            var sridBoxes = GetBoundingBoxes(RootLayer);
             foreach (var sridBox in sridBoxes)
             {
                 if (SRID == sridBox.SRID)
@@ -865,7 +865,7 @@ namespace SharpMap.Layers
         /// Gets all the boundingboxes from the Client.WmsServerLayer
         /// </summary>
         /// <returns>List of all spatial referenced boundingboxes</returns>
-        private List<SpatialReferencedBoundingBox> getBoundingBoxes(Client.WmsServerLayer layer)
+        private List<SpatialReferencedBoundingBox> GetBoundingBoxes(Client.WmsServerLayer layer)
         {
             var box = new List<SpatialReferencedBoundingBox>();
             box.AddRange(layer.SRIDBoundingBoxes);
@@ -873,7 +873,7 @@ namespace SharpMap.Layers
             {
                 for (int i = 0; i < layer.ChildLayers.Length; i++)
                 {
-                    box.AddRange(getBoundingBoxes(layer.ChildLayers[i]));
+                    box.AddRange(GetBoundingBoxes(layer.ChildLayers[i]));
                 }
             }
             return box;

@@ -144,26 +144,16 @@ namespace SharpMap.Web.Wfs
             set { _version = value; }
         }
 
-        private string[] _exceptionFormats;
+        //private string[] _exceptionFormats;
         /// <summary>
         /// Gets a list of available exception mime type formats
         /// </summary>
-        public string[] ExceptionFormats
-        {
-            get
-            {
-                return _exceptionFormats;
-            }
-        }
+        public string[] ExceptionFormats { get => null; } // _exceptionFormats; }
 
         /// <summary>
         /// Gets the capabilities information as <see cref="XmlDocument"/>
         /// </summary>
-        public XmlDocument XmlDoc
-        {
-            get { return _xmlDoc; }
-        }
-
+        public XmlDocument XmlDoc { get => _xmlDoc; }
         #endregion
 
         #region Constructors

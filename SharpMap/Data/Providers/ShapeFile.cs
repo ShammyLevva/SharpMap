@@ -580,7 +580,7 @@ namespace SharpMap.Data.Providers
                         var tmpOids = new Collection<uint>();
                         foreach (var oid in oids)
                         {
-                            var fdr = getFeature(oid, table, br, DbaseFile);
+                            var fdr = GetFeature(oid, table, br, DbaseFile);
                             if (!FilterDelegate(fdr)) continue;
                             result.Add(fdr.Geometry);
                             tmpOids.Add(oid);
@@ -755,7 +755,7 @@ namespace SharpMap.Data.Providers
 
                 if (fdr == null)
                 {
-                    fdr = getFeature(oid, dbf.NewTable, br, dbf);
+                    fdr = GetFeature(oid, dbf.NewTable, br, dbf);
                 }
 
                 return fdr.Geometry;
@@ -1372,7 +1372,7 @@ namespace SharpMap.Data.Providers
                     {
                         if (dt == null)
                             dt = dbfReader.NewTable;
-                        ret = getFeature(rowId, dt, br, dbfReader);
+                        ret = GetFeature(rowId, dt, br, dbfReader);
                         dbfReader.Close();
                     }
                     br.Close();
@@ -1382,7 +1382,7 @@ namespace SharpMap.Data.Providers
             return ret;
         }
 
-        private FeatureDataRow getFeature(uint rowid, FeatureDataTable dt, BinaryReader br, DbaseReader dbfFileReader)
+        private FeatureDataRow GetFeature(uint rowid, FeatureDataTable dt, BinaryReader br, DbaseReader dbfFileReader)
         {
             Debug.Assert(dt != null);
             if (dbfFileReader != null)

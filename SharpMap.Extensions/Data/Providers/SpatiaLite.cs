@@ -184,7 +184,6 @@ namespace SharpMap.Data.Providers
                                 break;
                             default:
                                 throw new Exception("Cannot evaluate number of ordinate dimensions");
-
                         }
 
                         switch (dr.GetInt32(2))
@@ -217,6 +216,8 @@ namespace SharpMap.Data.Providers
                 _useSpatialIndex = false;
             }
         }
+
+        public int OrdinateDimensions { get => _numOrdinateDimensions; }
 
         /// <summary>
         /// Gets or sets the extent for this data source
